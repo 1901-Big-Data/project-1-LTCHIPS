@@ -50,13 +50,13 @@ public class AppTest
 	{
 		
 		mapDrive.withInput(new LongWritable(1), 
-				new Text("test,TST,plz work,SE.TER.CUAT.BA.FE.ZA,21.25,22.25,30.25,10.2,11.3,11.7,28.9,33.4,35.78,40.65,\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",28.5,0.4,3.2,13.37,13.38,\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","));
+				new Text("\"test\",\"TST\",\"plz work\",\"SE.SEC.CUAT.PO.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"13.37\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",") );
 		
-		mapDrive.withOutput(new Text("test"), new FloatWritable(13.37F));
+		mapDrive.withOutput(new Text("TST"), new FloatWritable(13.37F));
 		
 		mapDrive.runTest();
 	}
-	
+	//For Q1's reducer...
 	@Test
 	public void TestReduceExampleRow()
 	{
@@ -68,8 +68,18 @@ public class AppTest
 		
 		reduceDrive.withOutput(new Text("test"), new FloatWritable(13.37F));
 		
+		reduceDrive.runTest();
+		
 	}
-	
-	
-	
+	@Test
+	public void TestQ1MapReduceRow()
+	{
+		mapReduceDrive.withInput(new LongWritable(1), 
+		new Text("\"test\",\"TST\",\"plz work\",\"SE.SEC.CUAT.PO.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"13.37\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",") );
+		
+		mapReduceDrive.withOutput(new Text("TST"), new FloatWritable(13.37F));
+		
+		mapReduceDrive.runTest();
+		
+	}
 }

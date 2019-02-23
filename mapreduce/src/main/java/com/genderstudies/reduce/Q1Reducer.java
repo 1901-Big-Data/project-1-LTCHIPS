@@ -10,12 +10,19 @@ public class Q1Reducer extends Reducer<Text, FloatWritable, Text, FloatWritable>
 {
 	protected void reduce(Text key, Iterable<FloatWritable> fltVal, Context context) throws IOException, InterruptedException
 	{
+		int numOfEntries = 1;
+		float sum = 0;
 		for(FloatWritable val : fltVal)
 		{
-			if(val.get() < 30.0F)
-			{
-				context.write(key, val);
-			}
+			sum+=val.get();
 		}
+		
+		float average = sum/numOfEntries;
+		
+		if (average < 30.0F)
+		{
+			context.write(key, new FloatWritable(average));
+		}
+		
 	}
 }

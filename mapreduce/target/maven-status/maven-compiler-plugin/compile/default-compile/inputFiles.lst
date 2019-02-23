@@ -1,0 +1,3 @@
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/reduce/Q1Reducer.java
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapreduce/GenderStudiesDriver.java
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapper/Q1Mapper.java
