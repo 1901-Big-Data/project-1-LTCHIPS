@@ -14,8 +14,9 @@ import org.junit.Test;
 
 import com.genderstudies.mapper.Q1Mapper;
 import com.genderstudies.mapper.Q2Mapper;
+import com.genderstudies.mapper.Q3Mapper;
+import com.genderstudies.reduce.DifferenceAverageReducer;
 import com.genderstudies.reduce.Q1Reducer;
-import com.genderstudies.reduce.Q2Reducer;
 
 /**
  * Unit test for simple App.
@@ -26,6 +27,8 @@ public class AppTest
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q1MapDrive;
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q2MapDrive;
 	
+	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q3MapDrive;
+	
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q1ReduceDrive;
 	
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q2ReduceDrive;
@@ -33,6 +36,8 @@ public class AppTest
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q1mapReduceDriver;
 	
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q2mapReduceDriver;
+	
+	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q3mapReduceDriver; 
 	
 	@BeforeClass
 	public static void Setup()
@@ -59,7 +64,7 @@ public class AppTest
 		
 		//q2reducer
 		Q2ReduceDrive = new ReduceDriver();
-		Q2Reducer q2reducer = new Q2Reducer();
+		DifferenceAverageReducer q2reducer = new DifferenceAverageReducer();
 		Q2ReduceDrive.setReducer(q2reducer);
 		
 		//Q2MapReduceDriver
@@ -67,6 +72,15 @@ public class AppTest
 		Q2mapReduceDriver.setMapper(q2mapper);
 		Q2mapReduceDriver.setReducer(q2reducer);
 		
+		
+		//q3mapper
+		Q3MapDrive = new MapDriver();
+		Q3Mapper q3mapper = new Q3Mapper();
+		Q3MapDrive.setMapper(q3mapper);
+		
+		//Q3MapReduceDriver
+		Q3mapReduceDriver = new MapReduceDriver();
+		Q3mapReduceDriver.setMapper(q3mapper);
 		
 	}
 	//For Q1's mapper...
@@ -152,7 +166,42 @@ public class AppTest
 		Q2mapReduceDriver.runTest();
 	}
 	
+	@Test
+	public void TestQ3ARGMapper()
+	{
+		Q3MapDrive.withInput(new LongWritable(1),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.AGR.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"0.930000007\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","));
+		
+		Q3MapDrive.withOutput(new Text("tst AGR"), new FloatWritable(0.949999988F));
+		Q3MapDrive.withOutput(new Text("tst AGR"), new FloatWritable(0.930000007F));	
+		
+		Q3MapDrive.runTest();
+	}
 	
-	
+	@Test
+	public void TestQ3INDMapper()
+	{
+		Q3MapDrive.withInput(new LongWritable(2),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.IND.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"0.930000007\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","));
+		
+		Q3MapDrive.withOutput(new Text("tst IND"), new FloatWritable(0.949999988F));
+		Q3MapDrive.withOutput(new Text("tst IND"), new FloatWritable(0.930000007F));
+		
+		Q3MapDrive.runTest();
+		
+	}
+	@Test
+	public void TestQ3SRVMapper()
+	{
+		Q3MapDrive.withInput(new LongWritable(3),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"0.930000007\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","));
+		
+		
+		Q3MapDrive.withOutput(new Text("tst SRV"), new FloatWritable(0.949999988F));
+		Q3MapDrive.withOutput(new Text("tst SRV"), new FloatWritable(0.930000007F));
+		
+		Q3MapDrive.runTest();
+	}
+
 	
 }
