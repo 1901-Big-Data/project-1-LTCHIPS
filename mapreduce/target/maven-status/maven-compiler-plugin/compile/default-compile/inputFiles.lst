@@ -1,6 +1,9 @@
 /home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/reduce/Q1Reducer.java
 /home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapreduce/Q1Driver.java
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapreduce/Q3Driver.java
 /home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapper/Q2Mapper.java
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapper/Q3Mapper.java
 /home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapper/Q1Mapper.java
 /home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/mapreduce/Q2Driver.java
-/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/reduce/Q2Reducer.java
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/reduce/DifferenceAverageReducer.java
+/home/cloudera/workspace/mapreduce/src/main/java/com/genderstudies/reduce/Q3Reducer.java

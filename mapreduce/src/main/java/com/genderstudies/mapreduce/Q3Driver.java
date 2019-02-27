@@ -12,6 +12,7 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import com.genderstudies.mapper.Q3Mapper;
+import com.genderstudies.reduce.Q3Reducer;
 
 public class Q3Driver extends Configured implements Tool {
 	   public static void main( String[] args ) throws Exception
@@ -41,7 +42,7 @@ public class Q3Driver extends Configured implements Tool {
 	        
 	        job.setMapperClass(Q3Mapper.class);
 	        
-	        //job.setReducerClass(DifferenceAverageReducer.class);
+	        job.setReducerClass(Q3Reducer.class);
 	        
 	        job.setJobName("GenderStudiesQ3");
 	        

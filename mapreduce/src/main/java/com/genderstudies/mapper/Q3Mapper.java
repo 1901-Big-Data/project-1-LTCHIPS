@@ -25,7 +25,6 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		return x;
 	}
 	
-	
 	protected void map(LongWritable key, Text row, Context context) throws IOException, InterruptedException
 	{	
 		
@@ -54,7 +53,6 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		else if (rowStr[index].equals("SL.IND.EMPL.FE.ZS"))
 		{
 			rowCode = rowStr[1] + " IND";
-					
 		}
 		else if (rowStr[index].equals("SL.SRV.EMPL.FE.ZS"))
 		{
@@ -63,18 +61,37 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		
 		if (!rowCode.isEmpty())
 		{
-			for (int x = getColIndex("2000"); x < rowStr.length; x++)
-			{
-				try
-				{
-					Float value = Float.parseFloat(rowStr[x]);
-					context.write(new Text(rowCode), new FloatWritable(value));
-				}
-				catch(Exception nfe)
-				{
-					continue;
-				}
+			int index2000 = getColIndex("2000");
+			
+			Float value2000, value2016;
+			
+			try{
+				value2000 = Float.parseFloat(rowStr[index2000]);
+				
 			}
+			catch(NumberFormatException nfe)
+			{
+				return;
+			}
+			
+			
+			int index2016 = 59 ;
+			
+			try
+			{
+				value2016 = Float.parseFloat(rowStr[index2016]);
+			}
+			catch(NumberFormatException nfe)
+			{
+				return;
+			}
+			
+			//Float value2016 = Float.parseFloat(rowStr[index2016]);
+			
+			
+			context.write(new Text(rowCode), new FloatWritable(value2000));
+			context.write(new Text(rowCode), new FloatWritable(value2016));
+			
 		}
 		
 	}
