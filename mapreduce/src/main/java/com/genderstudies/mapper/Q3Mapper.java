@@ -36,27 +36,21 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			return;
 		}
 		
-		//clean strings
-		for (int x = 0; x < rowStr.length; x++)
-		{
-			rowStr[x] = rowStr[x].substring(1, rowStr[x].length() - 1);	
-		}
-		
 		int index = getColIndex("Indicator Code");
 		
 		String rowCode = "";
 		
-		if (rowStr[index].equals("SL.AGR.EMPL.FE.ZS"))
+		if (rowStr[index].equals("\"SL.AGR.EMPL.FE.ZS\""))
 		{
-			rowCode = rowStr[1] + " AGR";
+			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " AGR";
 		}
-		else if (rowStr[index].equals("SL.IND.EMPL.FE.ZS"))
+		else if (rowStr[index].equals("\"SL.IND.EMPL.FE.ZS\""))
 		{
-			rowCode = rowStr[1] + " IND";
+			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " IND";
 		}
-		else if (rowStr[index].equals("SL.SRV.EMPL.FE.ZS"))
+		else if (rowStr[index].equals("\"SL.SRV.EMPL.FE.ZS\""))
 		{
-			rowCode = rowStr[1] + " SRV";
+			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " SRV";
 		}
 		
 		if (!rowCode.isEmpty())
@@ -65,9 +59,9 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			
 			Float value2000, value2016;
 			
-			try{
-				value2000 = Float.parseFloat(rowStr[index2000]);
-				
+			try
+			{
+				value2000 = Float.parseFloat(rowStr[index2000].substring(1, rowStr[index2000].length() - 1));
 			}
 			catch(NumberFormatException nfe)
 			{
@@ -79,7 +73,7 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			
 			try
 			{
-				value2016 = Float.parseFloat(rowStr[index2016]);
+				value2016 = Float.parseFloat(rowStr[index2016].substring(1, rowStr[index2016].length() - 1));
 			}
 			catch(NumberFormatException nfe)
 			{

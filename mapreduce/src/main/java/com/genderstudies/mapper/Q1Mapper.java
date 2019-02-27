@@ -20,9 +20,7 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		{
 			if (headers[x].equals(col))
 				break;
-			
 		}
-		
 		
 		return x;
 	}
@@ -32,32 +30,34 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 	{	
 		String[] rowStr = row.toString().split(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 		
-		
-		//clean strings
-		for (int x = 0; x < rowStr.length; x++)
-		{
-			rowStr[x] = rowStr[x].substring(1, rowStr[x].length() - 1);
-			
-		}
-		
-		if (rowStr[1].equals("Country Name")) //skip headers
+		if (rowStr[1].equals("\"Country Name\"")) //skip headers
 		{
 			//headers = rowStr.clone();
 			return;
 		}
 		
+		
+		//clean strings
+		//for (int x = 0; x < rowStr.length; x++)
+		//{
+			//rowStr[x] = rowStr[x].substring(1, rowStr[x].length() - 1);
+			
+		//}
+		
+		
+		
 		int index = getColIndex("Indicator Code");
 		
-		if (rowStr[index].equals("SE.SEC.CUAT.PO.FE.ZS"))
+		if (rowStr[index].equals("\"SE.SEC.CUAT.PO.FE.ZS\""))
 		{
 			for (int x = index; x < rowStr.length; x++)
 			{
 				try
 				{
-					Float value = Float.parseFloat(rowStr[x]); 
-					context.write(new Text(rowStr[1]) , new FloatWritable(value));	
+					Float value = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1)); 
+					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)) , new FloatWritable(value));	
 				}
-				catch(Exception nfe)
+				catch(NumberFormatException nfe)
 				{
 					continue;
 				}

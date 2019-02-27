@@ -15,32 +15,29 @@ import org.junit.Test;
 import com.genderstudies.mapper.Q1Mapper;
 import com.genderstudies.mapper.Q2Mapper;
 import com.genderstudies.mapper.Q3Mapper;
+import com.genderstudies.mapper.Q4Mapper;
 import com.genderstudies.reduce.DifferenceAverageReducer;
 import com.genderstudies.reduce.Q1Reducer;
 import com.genderstudies.reduce.Q3Reducer;
 
 /**
- * Unit test for simple App.
+ * Unit test for super duper complex app
  */
 public class AppTest 
 {
 	
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q1MapDrive;
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q2MapDrive;
-	
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q3MapDrive;
-	
+	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q4MapDrive;
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q1ReduceDrive;
-	
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q2ReduceDrive;
-	
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q3ReduceDrive;
-	
+	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q4ReduceDrive;
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q1mapReduceDriver;
-	
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q2mapReduceDriver;
-	
-	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q3mapReduceDriver; 
+	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q3mapReduceDriver;
+	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q4mapReduceDriver;
 	
 	@BeforeClass
 	public static void Setup()
@@ -89,6 +86,19 @@ public class AppTest
 		Q3mapReduceDriver = new MapReduceDriver();
 		Q3mapReduceDriver.setMapper(q3mapper);
 		Q3mapReduceDriver.setReducer(q3reducer);
+		
+		//q4mapper
+		Q4MapDrive = new MapDriver();
+		Q4Mapper q4mapper = new Q4Mapper();
+		Q4MapDrive.setMapper(q4mapper);
+		
+		Q4ReduceDrive = new ReduceDriver();
+		Q4ReduceDrive.setReducer(q3reducer);
+		
+		Q4mapReduceDriver = new MapReduceDriver();
+		Q4mapReduceDriver.setMapper(q4mapper);
+		Q4mapReduceDriver.setReducer(q3reducer);
+		
 		
 	}
 	//For Q1's mapper...
@@ -139,7 +149,7 @@ public class AppTest
 		Q2MapDrive.withOutput(new Text("USA"), new FloatWritable(35.37453F));
 		Q2MapDrive.withOutput(new Text("USA"), new FloatWritable(36.00504F));
 		Q2MapDrive.withOutput(new Text("USA"), new FloatWritable(40.75F));
-		Q2MapDrive.runTest();
+		Q2MapDrive.runTest(false);
 	}
 	
 	@Test
@@ -173,41 +183,47 @@ public class AppTest
 		Q2mapReduceDriver.runTest();
 	}
 	
-/*	@Test
+	@Test
 	public void TestQ3ARGMapper()
 	{
+		Q3MapDrive.resetOutput();
+		
 		Q3MapDrive.withInput(new LongWritable(1),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.AGR.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
 		Q3MapDrive.withOutput(new Text("tst AGR"), new FloatWritable(0.949999988F));
 		Q3MapDrive.withOutput(new Text("tst AGR"), new FloatWritable(0.930000007F));
 		
-		Q3MapDrive.runTest();
+		Q3MapDrive.runTest(false);
 	}
 	
 	@Test
 	public void TestQ3INDMapper()
 	{
+		Q3MapDrive.resetOutput();
+		
 		Q3MapDrive.withInput(new LongWritable(2),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.IND.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
 		Q3MapDrive.withOutput(new Text("tst IND"), new FloatWritable(0.949999988F));
 		Q3MapDrive.withOutput(new Text("tst IND"), new FloatWritable(0.930000007F));
 		
-		Q3MapDrive.runTest();
+		Q3MapDrive.runTest(false);
 		
 	}
 	
 	@Test
 	public void TestQ3SRVMapper()
 	{
+		Q3MapDrive.resetOutput();
+		
 		Q3MapDrive.withInput(new LongWritable(3),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
 		Q3MapDrive.withOutput(new Text("tst SRV"), new FloatWritable(0.949999988F));
 		Q3MapDrive.withOutput(new Text("tst SRV"), new FloatWritable(0.930000007F));
 		
-		Q3MapDrive.runTest();
+		Q3MapDrive.runTest(false);
 	}
 	
 	@Test
@@ -221,7 +237,7 @@ public class AppTest
 		
 		Q3ReduceDrive.withInput(new Text("tst SRV"), testList);
 		
-		Q3ReduceDrive.withOutput(new Text("tst SRV"), new FloatWritable(2.105261F));
+		Q3ReduceDrive.withOutput(new Text("tst SRV"), new FloatWritable(-2.105261F));
 		
 		Q3ReduceDrive.runTest();
 		
@@ -239,16 +255,98 @@ public class AppTest
 		Q3mapReduceDriver.withInput(new LongWritable(3),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		//Q3mapReduceDriver.withOutput(new Text("tst AGR"), new FloatWritable(2.105261F));
+		Q3mapReduceDriver.withOutput(new Text("tst AGR"), new FloatWritable(-2.105261F));
 		
-		//Q3mapReduceDriver.withOutput(new Text("tst IND"), new FloatWritable(2.105261F));
+		Q3mapReduceDriver.withOutput(new Text("tst IND"), new FloatWritable(-2.105261F));
 		
-		//Q3mapReduceDriver.withOutput(new Text("tst SRV"), new FloatWritable(2.105261F));
+		Q3mapReduceDriver.withOutput(new Text("tst SRV"), new FloatWritable(-2.105261F));
 		
-		Q3mapReduceDriver.runTest();
+		Q3mapReduceDriver.runTest(false);
 		
 		
 		
-	}*/
+	}
+	
+	@Test
+	public void TestQ4ARGMapper()
+	{
+		Q4MapDrive.resetOutput();
+		
+		Q4MapDrive.withInput(new LongWritable(1),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.AGR.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
+		
+		Q4MapDrive.withOutput(new Text("tst AGR"), new FloatWritable(0.949999988F));
+		Q4MapDrive.withOutput(new Text("tst AGR"), new FloatWritable(0.930000007F));
+		
+		Q4MapDrive.runTest(false);
+	}
+	
+	@Test
+	public void TestQ4INDMapper()
+	{
+		Q4MapDrive.resetOutput();
+		
+		Q4MapDrive.withInput(new LongWritable(2),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.IND.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
+		
+		Q4MapDrive.withOutput(new Text("tst IND"), new FloatWritable(0.949999988F));
+		Q4MapDrive.withOutput(new Text("tst IND"), new FloatWritable(0.930000007F));
+		
+		Q4MapDrive.runTest(false);
+		
+	}
+	
+	@Test
+	public void TestQ4SRVMapper()
+	{
+		Q4MapDrive.resetOutput();
+		
+		Q4MapDrive.withInput(new LongWritable(3),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
+		
+		Q4MapDrive.withOutput(new Text("tst SRV"), new FloatWritable(0.949999988F));
+		Q4MapDrive.withOutput(new Text("tst SRV"), new FloatWritable(0.930000007F));
+		
+		Q4MapDrive.runTest(false);
+	}
+	
+	@Test
+	public void TestQ4Reducer()
+	{
+		List<FloatWritable> testList = new ArrayList<FloatWritable>();
+		
+		testList.add(new FloatWritable(0.949999988F));
+		
+		testList.add(new FloatWritable(0.930000007F));
+		
+		Q4ReduceDrive.withInput(new Text("tst SRV"), testList);
+		
+		Q4ReduceDrive.withOutput(new Text("tst SRV"), new FloatWritable(-2.105261F));
+		
+		Q4ReduceDrive.runTest();
+		
+	}
+	
+	@Test
+	public void TestQ4MapperAndReducer()
+	{
+		Q4mapReduceDriver.withInput(new LongWritable(1),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.AGR.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
+		
+		Q4mapReduceDriver.withInput(new LongWritable(2),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.IND.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
+		
+		Q4mapReduceDriver.withInput(new LongWritable(3),
+				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
+		
+		Q4mapReduceDriver.withOutput(new Text("tst AGR"), new FloatWritable(-2.105261F));
+		
+		Q4mapReduceDriver.withOutput(new Text("tst IND"), new FloatWritable(-2.105261F));
+		
+		Q4mapReduceDriver.withOutput(new Text("tst SRV"), new FloatWritable(-2.105261F));
+		
+		Q4mapReduceDriver.runTest(false);
+		
+	}
 	
 }
