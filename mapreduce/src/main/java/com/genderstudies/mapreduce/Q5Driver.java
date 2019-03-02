@@ -11,15 +11,15 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-import com.genderstudies.mapper.Q4Mapper;
-import com.genderstudies.reduce.Q3Reducer;
+import com.genderstudies.mapper.Q5Mapper;
+import com.genderstudies.reduce.Q2Reducer;
 
-public class Q4Driver extends Configured implements Tool {
+public class Q5Driver extends Configured implements Tool {
 	   public static void main( String[] args ) throws Exception
-	    {
-	    	int exitCode = ToolRunner.run(new Configuration(), new Q4Driver(), args);
+	   {
+	   		int exitCode = ToolRunner.run(new Configuration(), new Q5Driver(), args);
 			System.exit(exitCode);        
-	    }
+	   }
 
 		@Override
 		public int run(String[] arg0) throws Exception {
@@ -34,17 +34,17 @@ public class Q4Driver extends Configured implements Tool {
 			FileInputFormat.setInputPaths(job, new Path(arg0[0]));
 			FileOutputFormat.setOutputPath(job, new Path(arg0[1]));
 	        
-	        job.setJarByClass(Q4Driver.class);
+	        job.setJarByClass(Q5Driver.class);
 	        
 	        job.setOutputKeyClass(Text.class);
 	        
 	        job.setOutputValueClass(FloatWritable.class);
 	        
-	        job.setMapperClass(Q4Mapper.class);
+	        job.setMapperClass(Q5Mapper.class);
 	        
-	        job.setReducerClass(Q3Reducer.class);
+	        job.setReducerClass(Q2Reducer.class);
 	        
-	        job.setJobName("GenderStudiesQ4");
+	        job.setJobName("GenderStudiesQ5");
 	        
 	        boolean success = job.waitForCompletion(true);
 	        

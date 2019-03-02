@@ -16,12 +16,13 @@ import com.genderstudies.mapper.Q1Mapper;
 import com.genderstudies.mapper.Q2Mapper;
 import com.genderstudies.mapper.Q3Mapper;
 import com.genderstudies.mapper.Q4Mapper;
-import com.genderstudies.reduce.DifferenceAverageReducer;
+import com.genderstudies.mapper.Q5Mapper;
+import com.genderstudies.reduce.Q2Reducer;
 import com.genderstudies.reduce.Q1Reducer;
 import com.genderstudies.reduce.Q3Reducer;
 
 /**
- * Unit test for super duper complex app
+ * Unit tests for super duper complex app
  */
 public class AppTest 
 {
@@ -30,14 +31,20 @@ public class AppTest
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q2MapDrive;
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q3MapDrive;
 	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q4MapDrive;
+	private static MapDriver<LongWritable, Text, Text, FloatWritable> Q5MapDrive;
+	
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q1ReduceDrive;
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q2ReduceDrive;
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q3ReduceDrive;
 	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q4ReduceDrive;
+	private static ReduceDriver<Text, FloatWritable, Text, FloatWritable> Q5ReduceDrive;
+	
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q1mapReduceDriver;
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q2mapReduceDriver;
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q3mapReduceDriver;
 	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q4mapReduceDriver;
+	private static MapReduceDriver<LongWritable, Text, Text, FloatWritable, Text, FloatWritable> Q5mapReduceDriver;
+	
 	
 	@BeforeClass
 	public static void Setup()
@@ -64,7 +71,7 @@ public class AppTest
 		
 		//q2reducer
 		Q2ReduceDrive = new ReduceDriver();
-		DifferenceAverageReducer q2reducer = new DifferenceAverageReducer();
+		Q2Reducer q2reducer = new Q2Reducer();
 		Q2ReduceDrive.setReducer(q2reducer);
 		
 		//Q2MapReduceDriver
@@ -99,15 +106,26 @@ public class AppTest
 		Q4mapReduceDriver.setMapper(q4mapper);
 		Q4mapReduceDriver.setReducer(q3reducer);
 		
+		//q5mapper
+		Q5MapDrive = new MapDriver();
+		Q5Mapper q5mapper = new Q5Mapper();
+		Q5MapDrive.setMapper(q5mapper);
+		
+		Q5ReduceDrive = new ReduceDriver();
+		Q5ReduceDrive.setReducer(q2reducer);
+		
+		Q5mapReduceDriver = new MapReduceDriver();
+		Q5mapReduceDriver.setMapper(q5mapper);
+		Q5mapReduceDriver.setReducer(q2reducer);
+		
 		
 	}
 	//For Q1's mapper...
 	@Test
 	public void TestMapExampleRow()
-	{
-		
+	{	
 		Q1MapDrive.withInput(new LongWritable(1), 
-				new Text("\"test\",\"TST\",\"plz work\",\"SE.SEC.CUAT.PO.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"13.37\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",") );
+				new Text("\"test\",\"TST\",\"plz work\",\"SE.TER.HIAT.BA.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"13.37\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",") );
 		
 		Q1MapDrive.withOutput(new Text("TST"), new FloatWritable(13.37F));
 		
@@ -132,7 +150,7 @@ public class AppTest
 	public void TestQ1MapReduceRow()
 	{
 		Q1mapReduceDriver.withInput(new LongWritable(1), 
-		new Text("\"test\",\"TST\",\"plz work\",\"SE.SEC.CUAT.PO.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"13.37\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",") );
+		new Text("\"test\",\"TST\",\"plz work\",\"SE.TER.HIAT.BA.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"13.37\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",") );
 		
 		Q1mapReduceDriver.withOutput(new Text("TST"), new FloatWritable(13.37F));
 		
@@ -263,8 +281,6 @@ public class AppTest
 		
 		Q3mapReduceDriver.runTest(false);
 		
-		
-		
 	}
 	
 	@Test
@@ -349,4 +365,46 @@ public class AppTest
 		
 	}
 	
+	@Test
+	public void TestQ5MapperExampleRow()
+	{
+		Q5MapDrive.withInput(new LongWritable(1), 
+		new Text("\"United States\",\"USA\",\"Educational attainment, completed Bachelor's or equivalent, population 25+ years, male (%)\",\"SE.TER.HIAT.BA.MA.ZS\",\"14.8\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"44.54951\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"35.37453\",\"36.00504\",\"40.75\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","));
+		
+		Q5MapDrive.withOutput(new Text("USA"), new FloatWritable(35.37453F));
+		Q5MapDrive.withOutput(new Text("USA"), new FloatWritable(36.00504F));
+		Q5MapDrive.withOutput(new Text("USA"), new FloatWritable(40.75F));
+		Q5MapDrive.runTest(false);
+	}
+	
+	@Test
+	public void TestQ5ReducerExampleRow()
+	{
+		List<FloatWritable> testList = new ArrayList<FloatWritable>();
+		
+		testList.add(new FloatWritable(35.37453F));
+		
+		testList.add(new FloatWritable(36.00504F));
+		
+		testList.add(new FloatWritable(40.75F));
+		
+		Q5ReduceDrive.withInput(new Text("USA"), testList);
+		
+		Float output = (Math.abs(35.37453F - 36.00504F) + Math.abs(36.00504F - 40.75F))/2;
+		
+		Q5ReduceDrive.withOutput(new Text("USA"), new FloatWritable(output));
+		Q5ReduceDrive.runTest();
+	}
+	
+	@Test
+	public void TestQ5MapReduceCombo()
+	{
+		Q5mapReduceDriver.withInput(new LongWritable(1), 
+		new Text("\"United States\",\"USA\",\"Educational attainment, completed Bachelor's or equivalent, population 25+ years, male (%)\",\"SE.TER.HIAT.BA.MA.ZS\",\"14.8\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"44.54951\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"35.37453\",\"36.00504\",\"40.75\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","));
+		
+		Float output = (Math.abs(35.37453F - 36.00504F) + Math.abs(36.00504F - 40.75F))/2;
+		
+		Q5mapReduceDriver.withOutput(new Text("USA"), new FloatWritable(output));
+		Q5mapReduceDriver.runTest();
+	}
 }

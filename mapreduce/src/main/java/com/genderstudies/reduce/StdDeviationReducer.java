@@ -7,24 +7,33 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class Q3Reducer extends Reducer<Text, FloatWritable, Text, FloatWritable> 
+public class StdDeviationReducer extends Reducer<Text, FloatWritable, Text, FloatWritable> 
 {
 	protected void reduce(Text key, Iterable<FloatWritable> fltVal, Context context) throws IOException, InterruptedException
 	{	
 		ArrayList<Float> vals = new ArrayList<Float>();
 		
+		float average = 0;
+		
 		for (FloatWritable flt : fltVal)
 		{
+			average += flt.get();
 			vals.add(flt.get());
 		}
+		average/=vals.size();
 		
-		Float y1 = vals.get(0);
+		float devNumerator = 0;
 		
-		Float y2 = vals.get(1);
+		for (Float value : vals)
+		{
+			devNumerator+=(float) Math.pow(value-average, 2.0);
+		}
 		
-		Float percentChange = ((y2 - y1)/y1) * 100;
+		devNumerator/=(vals.size() - 1);
 		
-		context.write(key, new FloatWritable(percentChange));
+		Float result = (float) Math.sqrt((double)devNumerator);
+		
+		context.write(key, new FloatWritable(result));
 		
 	}
 	

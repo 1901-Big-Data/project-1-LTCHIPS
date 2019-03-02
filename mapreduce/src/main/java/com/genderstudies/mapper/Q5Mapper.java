@@ -7,7 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Q2Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
+public class Q5Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
 
 	private static String[] headers = 
 		{ "Country Name",
@@ -48,10 +48,10 @@ public class Q2Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		
 		int countryCodeIndex = getColIndex("Country Code");
 		
-		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\"") && rowStr[countryCodeIndex].equals("\"USA\""))
+		if (rowStr[index].equals("\"SE.TER.HIAT.BA.MA.ZS\"") && rowStr[countryCodeIndex].equals("\"USA\""))
 		{	
 			for (int x = getColIndex("2000"); x < rowStr.length; x++)
-			{		
+			{
 				try
 				{
 					Float value = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1));

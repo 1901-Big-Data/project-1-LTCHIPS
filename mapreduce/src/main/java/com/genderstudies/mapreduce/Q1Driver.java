@@ -14,11 +14,6 @@ import org.apache.hadoop.util.ToolRunner;
 import com.genderstudies.mapper.Q1Mapper;
 import com.genderstudies.reduce.Q1Reducer;
 
-
-/**
- * Hello world!
- *
- */
 public class Q1Driver extends Configured implements Tool
 {
 

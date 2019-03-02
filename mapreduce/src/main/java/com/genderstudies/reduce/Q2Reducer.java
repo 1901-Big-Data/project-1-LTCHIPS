@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Reducer.Context;
 
 public class Q2Reducer extends Reducer<Text, FloatWritable, Text, FloatWritable>
 {
@@ -21,10 +20,7 @@ public class Q2Reducer extends Reducer<Text, FloatWritable, Text, FloatWritable>
 		for (FloatWritable val : fltVal)
 		{
 			list.add(val.get());
-			
 		}
-		
-		
 		
 		for (int x = 0; (x + 1) < list.size(); x++)
 		{
@@ -34,10 +30,7 @@ public class Q2Reducer extends Reducer<Text, FloatWritable, Text, FloatWritable>
 		
 		float average = sum/numOfEntries;
 		
-		//if (average < 30.0F)
-		//{
 		context.write(key, new FloatWritable(average));
-		//}
 		
 	}
 
