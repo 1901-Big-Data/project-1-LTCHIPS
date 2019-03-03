@@ -3,7 +3,7 @@ package com.genderstudies.mapreduce;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -12,7 +12,7 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import com.genderstudies.mapper.Q5Mapper;
-import com.genderstudies.reduce.Q2Reducer;
+import com.genderstudies.reduce.Q5Reducer;
 
 public class Q5Driver extends Configured implements Tool {
 	   public static void main( String[] args ) throws Exception
@@ -38,11 +38,11 @@ public class Q5Driver extends Configured implements Tool {
 	        
 	        job.setOutputKeyClass(Text.class);
 	        
-	        job.setOutputValueClass(FloatWritable.class);
+	        job.setOutputValueClass(DoubleWritable.class);
 	        
 	        job.setMapperClass(Q5Mapper.class);
 	        
-	        job.setReducerClass(Q2Reducer.class);
+	        job.setReducerClass(Q5Reducer.class);
 	        
 	        job.setJobName("GenderStudiesQ5");
 	        

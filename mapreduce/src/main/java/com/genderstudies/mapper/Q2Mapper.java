@@ -50,7 +50,7 @@ public class Q2Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		
 		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\"") && rowStr[countryCodeIndex].equals("\"USA\""))
 		{	
-			for (int x = getColIndex("2000"); x < rowStr.length; x++)
+			for (int x = 44; x < rowStr.length; x++)
 			{		
 				try
 				{

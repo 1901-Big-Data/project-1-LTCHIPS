@@ -2,12 +2,12 @@ package com.genderstudies.mapper;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Q5Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
+public class Q5Mapper  extends Mapper<LongWritable, Text, Text, DoubleWritable>{
 
 	private static String[] headers = 
 		{ "Country Name",
@@ -46,19 +46,19 @@ public class Q5Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		
 		int index = getColIndex("Indicator Code");
 		
-		int countryCodeIndex = getColIndex("Country Code");
-		
-		if (rowStr[index].equals("\"SE.TER.HIAT.BA.MA.ZS\"") && rowStr[countryCodeIndex].equals("\"USA\""))
+		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\""))
 		{	
-			for (int x = getColIndex("2000"); x < rowStr.length; x++)
-			{
+			//49 is the year 2006 column
+			for (int x = 48; x < rowStr.length; x++)
+			{	
 				try
 				{
-					Float value = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1));
-					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)), new FloatWritable(value));
+					Double value = Double.parseDouble(rowStr[x].substring(1, rowStr[x].length() - 1));
+					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)), new DoubleWritable(value));
 				}
 				catch(NumberFormatException nfe)
 				{
+					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)), new DoubleWritable(-1.0));
 					continue;
 				}
 			}

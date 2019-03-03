@@ -58,7 +58,7 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		
 		if (!rowCode.isEmpty())
 		{
-			int index2000 = getColIndex("2000");
+			int index2000 = 44;
 			
 			Float valueLeftMostYear = 0.0F, valueRightMostYear = 0.0F;
 			for (int x = index2000; x < 59; x++){

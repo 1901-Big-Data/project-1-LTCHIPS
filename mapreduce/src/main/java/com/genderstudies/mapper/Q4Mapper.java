@@ -60,7 +60,7 @@ public class Q4Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		
 		if (!rowCode.isEmpty())
 		{
-			int index2000 = getColIndex("2000");
+			int index2000 = 44;
 			
 			Float value2000, value2016;
 			
