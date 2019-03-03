@@ -46,12 +46,15 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		
 		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\""))
 		{
+			String countryName = rowStr[0].substring(1, rowStr[0].length() - 1);
+			
 			for (int x = index+1; x < rowStr.length; x++)
 			{
 				try
 				{
-					Float value = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1)); 
-					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)) , new FloatWritable(value));	
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					Float value = Float.parseFloat(thingToParse); 
+					context.write(new Text(countryName) , new FloatWritable(value));	
 				}
 				catch(NumberFormatException nfe)
 				{

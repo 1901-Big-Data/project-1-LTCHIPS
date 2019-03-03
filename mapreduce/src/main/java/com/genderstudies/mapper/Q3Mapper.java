@@ -41,30 +41,40 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		
 		int index = getColIndex("Indicator Code");
 		
-		String rowCode = "";
+		String rowCountryName = "";
 		
 		if (rowStr[index].equals("\"SL.AGR.EMPL.FE.ZS\""))
 		{
-			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " AGR";
+			rowCountryName = rowStr[0].substring(1, rowStr[0].length() - 1) + " AGR";
 		}
 		else if (rowStr[index].equals("\"SL.IND.EMPL.FE.ZS\""))
 		{
-			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " IND";
+			rowCountryName = rowStr[0].substring(1, rowStr[0].length() - 1) + " IND";
 		}
 		else if (rowStr[index].equals("\"SL.SRV.EMPL.FE.ZS\""))
 		{
-			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " SRV";
+			rowCountryName = rowStr[0].substring(1, rowStr[0].length() - 1) + " SRV";
 		}
 		
-		if (!rowCode.isEmpty())
+		
+		
+		if (!rowCountryName.isEmpty())
 		{
 			int index2000 = 44;
 			
+			int leftMostYear = 0;
+			int rightMostYear = 0;
+			
 			Float valueLeftMostYear = 0.0F, valueRightMostYear = 0.0F;
-			for (int x = index2000; x < 59; x++){
+			for (int x = index2000; x < 59; x++)
+			{
 				try
 				{
-					valueLeftMostYear = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1));
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					
+					valueLeftMostYear = Float.parseFloat(thingToParse);
+					
+					leftMostYear=2000 + (x - index2000);
 				}
 				catch(NumberFormatException nfe)
 				{
@@ -74,7 +84,7 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			}
 			
 			//prevent NaN values being produced from divide by zero in reducer
-			if (valueLeftMostYear == 0.0)
+			if (valueLeftMostYear == 0.0F)
 			{
 				return;
 			}
@@ -84,7 +94,11 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			{
 				try
 				{
-					valueRightMostYear = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1));
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					
+					valueRightMostYear = Float.parseFloat(thingToParse);
+					
+					rightMostYear=2016 - Math.abs(x - index2016 );
 				}
 				catch(NumberFormatException nfe)
 				{
@@ -93,9 +107,21 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 				break;
 				
 			}
+			if (valueRightMostYear == 0.0F)
+			{
+				return;
+			}
+			
+			StringBuilder newKey = new StringBuilder(rowCountryName);
+			
+			newKey.append(" (");
+			newKey.append(leftMostYear);
+			newKey.append("-");
+			newKey.append(rightMostYear);
+			newKey.append(")");
 				
-			context.write(new Text(rowCode), new FloatWritable(valueLeftMostYear));
-			context.write(new Text(rowCode), new FloatWritable(valueRightMostYear));
+			context.write(new Text(newKey.toString()), new FloatWritable(valueLeftMostYear));
+			context.write(new Text(newKey.toString()), new FloatWritable(valueRightMostYear));
 			
 		}
 		

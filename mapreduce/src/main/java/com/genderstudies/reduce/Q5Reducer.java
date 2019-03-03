@@ -37,12 +37,13 @@ public class Q5Reducer extends Reducer<Text, DoubleWritable, Text, DoubleWritabl
 		
 		StringBuilder fromYearToYearStr = new StringBuilder(key.toString());
 		
-		int fromYear = 2004 + fromYearOffset;
+		//fix for years in key not lining up with CSV's years
+		int fromYear = 2004 + fromYearOffset - 1;
 		
 		int toYear = fromYear + 1;
 		
 		fromYearToYearStr.append(" (");
-		fromYearToYearStr.append(fromYear);
+		fromYearToYearStr.append(fromYear); 
 		fromYearToYearStr.append("-");
 		fromYearToYearStr.append(toYear);
 		fromYearToYearStr.append(")");

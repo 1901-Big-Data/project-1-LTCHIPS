@@ -24,7 +24,9 @@ public class Q3Reducer extends Reducer<Text, FloatWritable, Text, FloatWritable>
 		
 		Float percentChange = ((y2 - y1)/y1) * 100;
 		
-		context.write(key, new FloatWritable(percentChange));
+		
+		if(percentChange != 0.0F)
+			context.write(key, new FloatWritable(percentChange));
 		
 	}
 	

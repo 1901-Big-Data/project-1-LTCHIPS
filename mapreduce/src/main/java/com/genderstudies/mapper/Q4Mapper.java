@@ -6,6 +6,7 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Mapper.Context;
 
 public class Q4Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 {
@@ -43,49 +44,87 @@ public class Q4Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		
 		int index = getColIndex("Indicator Code");
 		
-		String rowCode = "";
+		String rowCountryName = "";
 		
 		if (rowStr[index].equals("\"SL.AGR.EMPL.MA.ZS\""))
 		{
-			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " AGR";
+			rowCountryName = rowStr[0].substring(1, rowStr[0].length() - 1) + " AGR";
 		}
 		else if (rowStr[index].equals("\"SL.IND.EMPL.MA.ZS\""))
 		{
-			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " IND";
+			rowCountryName = rowStr[0].substring(1, rowStr[0].length() - 1) + " IND";
 		}
 		else if (rowStr[index].equals("\"SL.SRV.EMPL.MA.ZS\""))
 		{
-			rowCode = rowStr[1].substring(1, rowStr[1].length() - 1) + " SRV";
+			rowCountryName = rowStr[0].substring(1, rowStr[0].length() - 1) + " SRV";
 		}
 		
-		if (!rowCode.isEmpty())
+		
+		
+		if (!rowCountryName.isEmpty())
 		{
 			int index2000 = 44;
 			
-			Float value2000, value2016;
+			int leftMostYear = 2000;
+			int rightMostYear = 2016;
 			
-			try
+			Float valueLeftMostYear = 0.0F, valueRightMostYear = 0.0F;
+			for (int x = index2000; x < 59; x++)
 			{
-				value2000 = Float.parseFloat(rowStr[index2000].substring(1, rowStr[index2000].length() - 1));
+				try
+				{
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					
+					valueLeftMostYear = Float.parseFloat(thingToParse);
+					
+					leftMostYear=2000 + (x - index2000);
+				}
+				catch(NumberFormatException nfe)
+				{
+					continue;
+				}
+				break;
 			}
-			catch(NumberFormatException nfe)
+			
+			//prevent NaN values being produced from divide by zero in reducer
+			if (valueLeftMostYear == 0.0)
 			{
 				return;
 			}
 			
-			int index2016 = 59 ;
-			
-			try
+			int index2016 = 59;
+			for(int x = index2016; x > index2000; x--)
 			{
-				value2016 = Float.parseFloat(rowStr[index2016].substring(1, rowStr[index2016].length() - 1));
+				try
+				{
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					
+					valueRightMostYear = Float.parseFloat(thingToParse);
+					
+					rightMostYear= 2016 - Math.abs(x - index2016 );
+				}
+				catch(NumberFormatException nfe)
+				{
+					continue;
+				}
+				break;
+				
 			}
-			catch(NumberFormatException nfe)
+			if (valueRightMostYear == 0.0F)
 			{
 				return;
 			}
 			
-			context.write(new Text(rowCode), new FloatWritable(value2000));
-			context.write(new Text(rowCode), new FloatWritable(value2016));
+			StringBuilder newKey = new StringBuilder(rowCountryName);
+			
+			newKey.append(" (");
+			newKey.append(leftMostYear);
+			newKey.append("-");
+			newKey.append(rightMostYear);
+			newKey.append(")");
+				
+			context.write(new Text(newKey.toString()), new FloatWritable(valueLeftMostYear));
+			context.write(new Text(newKey.toString()), new FloatWritable(valueRightMostYear));
 			
 		}
 		

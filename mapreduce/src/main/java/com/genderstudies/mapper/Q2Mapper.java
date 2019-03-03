@@ -50,12 +50,15 @@ public class Q2Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		
 		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\"") && rowStr[countryCodeIndex].equals("\"USA\""))
 		{	
+			
 			for (int x = 44; x < rowStr.length; x++)
 			{		
 				try
 				{
-					Float value = Float.parseFloat(rowStr[x].substring(1, rowStr[x].length() - 1));
-					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)), new FloatWritable(value));
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					
+					Float value = Float.parseFloat(thingToParse);
+					context.write(new Text("United States"), new FloatWritable(value));
 				}
 				catch(NumberFormatException nfe)
 				{

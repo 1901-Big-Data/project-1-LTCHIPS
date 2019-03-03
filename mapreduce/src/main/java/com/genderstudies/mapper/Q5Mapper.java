@@ -39,7 +39,9 @@ public class Q5Mapper  extends Mapper<LongWritable, Text, Text, DoubleWritable>{
 		//the regex splits on commas NOT enclosed in double quotes
 		String[] rowStr = row.toString().split(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 		
-		if (rowStr[1].equals("\"Country Name\"")) //skip headers
+		
+		//skip headers
+		if (rowStr[1].equals("\"Country Name\""))
 		{
 			return;
 		}
@@ -48,17 +50,20 @@ public class Q5Mapper  extends Mapper<LongWritable, Text, Text, DoubleWritable>{
 		
 		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\""))
 		{	
-			//49 is the year 2006 column
+			String countryName = rowStr[0].substring(1, rowStr[0].length() - 1);
+			
+			//48 is the year 2004 column
 			for (int x = 48; x < rowStr.length; x++)
 			{	
 				try
 				{
-					Double value = Double.parseDouble(rowStr[x].substring(1, rowStr[x].length() - 1));
-					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)), new DoubleWritable(value));
+					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
+					Double value = Double.parseDouble(thingToParse);
+					context.write(new Text(countryName), new DoubleWritable(value));
 				}
 				catch(NumberFormatException nfe)
 				{
-					context.write(new Text(rowStr[1].substring(1, rowStr[1].length() - 1)), new DoubleWritable(-1.0));
+					context.write(new Text(countryName), new DoubleWritable(-1.0));
 					continue;
 				}
 			}
