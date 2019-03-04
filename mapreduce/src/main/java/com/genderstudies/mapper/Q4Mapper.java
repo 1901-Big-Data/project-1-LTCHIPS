@@ -2,13 +2,11 @@ package com.genderstudies.mapper;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Mapper.Context;
 
-public class Q4Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
+public class Q4Mapper extends Mapper<LongWritable, Text, Text, Text>
 {
 	private static String[] headers = 
 		{ "Country Name",
@@ -121,8 +119,8 @@ public class Q4Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			newKey.append(headers[indexRightMost]);
 			newKey.append(")");
 				
-			context.write(new Text(newKey.toString()), new FloatWritable(valueLeftMostYear));
-			context.write(new Text(newKey.toString()), new FloatWritable(valueRightMostYear));
+			context.write(new Text(newKey.toString()), new Text("y1: " + valueLeftMostYear.toString()));
+			context.write(new Text(newKey.toString()), new Text("y2: " + valueRightMostYear.toString()));
 			
 		}
 		
