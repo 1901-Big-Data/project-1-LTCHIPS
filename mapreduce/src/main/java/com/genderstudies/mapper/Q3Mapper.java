@@ -6,6 +6,7 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Mapper.Context;
 
 public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 {
@@ -60,13 +61,10 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 		
 		if (!rowCountryName.isEmpty())
 		{
-			int index2000 = 44;
-			
-			int leftMostYear = 0;
-			int rightMostYear = 0;
+			int indexLeftMost = 44;
 			
 			Float valueLeftMostYear = 0.0F, valueRightMostYear = 0.0F;
-			for (int x = index2000; x < 59; x++)
+			for (int x = indexLeftMost; x < 59; x++)
 			{
 				try
 				{
@@ -74,23 +72,24 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 					
 					valueLeftMostYear = Float.parseFloat(thingToParse);
 					
-					leftMostYear=2000 + (x - index2000);
 				}
 				catch(NumberFormatException nfe)
 				{
+					indexLeftMost++;
 					continue;
 				}
 				break;
 			}
 			
 			//prevent NaN values being produced from divide by zero in reducer
-			if (valueLeftMostYear == 0.0F)
+			if (valueLeftMostYear == 0.0)
 			{
 				return;
 			}
 			
-			int index2016 = 59;
-			for(int x = index2016; x > index2000; x--)
+			int indexRightMost = 59;
+			
+			for(int x = indexRightMost; x > indexLeftMost; x--)
 			{
 				try
 				{
@@ -98,10 +97,10 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 					
 					valueRightMostYear = Float.parseFloat(thingToParse);
 					
-					rightMostYear=2016 - Math.abs(x - index2016 );
 				}
 				catch(NumberFormatException nfe)
 				{
+					indexRightMost--;
 					continue;
 				}
 				break;
@@ -115,9 +114,9 @@ public class Q3Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>
 			StringBuilder newKey = new StringBuilder(rowCountryName);
 			
 			newKey.append(" (");
-			newKey.append(leftMostYear);
+			newKey.append(headers[indexLeftMost]);
 			newKey.append("-");
-			newKey.append(rightMostYear);
+			newKey.append(headers[indexRightMost]);
 			newKey.append(")");
 				
 			context.write(new Text(newKey.toString()), new FloatWritable(valueLeftMostYear));

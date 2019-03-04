@@ -212,8 +212,8 @@ public class AppTest
 		Q3MapDrive.withInput(new LongWritable(1),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.AGR.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q3MapDrive.withOutput(new Text("test AGR (2000-2016)"), new FloatWritable(0.949999988F));
-		Q3MapDrive.withOutput(new Text("test AGR (2000-2016)"), new FloatWritable(0.930000007F));
+		Q3MapDrive.withOutput(new Text("test AGR (2000-2015)"), new FloatWritable(0.949999988F));
+		Q3MapDrive.withOutput(new Text("test AGR (2000-2015)"), new FloatWritable(0.930000007F));
 		
 		Q3MapDrive.runTest(false);
 	}
@@ -226,8 +226,8 @@ public class AppTest
 		Q3MapDrive.withInput(new LongWritable(2),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.IND.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q3MapDrive.withOutput(new Text("test IND (2000-2016)"), new FloatWritable(0.949999988F));
-		Q3MapDrive.withOutput(new Text("test IND (2000-2016)"), new FloatWritable(0.930000007F));
+		Q3MapDrive.withOutput(new Text("test IND (2000-2015)"), new FloatWritable(0.949999988F));
+		Q3MapDrive.withOutput(new Text("test IND (2000-2015)"), new FloatWritable(0.930000007F));
 		
 		Q3MapDrive.runTest(false);
 		
@@ -241,8 +241,8 @@ public class AppTest
 		Q3MapDrive.withInput(new LongWritable(3),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q3MapDrive.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(0.949999988F));
-		Q3MapDrive.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(0.930000007F));
+		Q3MapDrive.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(0.949999988F));
+		Q3MapDrive.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(0.930000007F));
 		
 		Q3MapDrive.runTest(false);
 	}
@@ -256,9 +256,9 @@ public class AppTest
 		
 		testList.add(new FloatWritable(0.930000007F));
 		
-		Q3ReduceDrive.withInput(new Text("test SRV (2000-2016)"), testList);
+		Q3ReduceDrive.withInput(new Text("test SRV (2000-2015)"), testList);
 		
-		Q3ReduceDrive.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(-2.105261F));
+		Q3ReduceDrive.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(-2.105261F));
 		
 		Q3ReduceDrive.runTest();
 		
@@ -276,11 +276,11 @@ public class AppTest
 		Q3mapReduceDriver.withInput(new LongWritable(3),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q3mapReduceDriver.withOutput(new Text("test AGR (2000-2016)"), new FloatWritable(-2.105261F));
+		Q3mapReduceDriver.withOutput(new Text("test AGR (2000-2015)"), new FloatWritable(-2.105261F));
 		
-		Q3mapReduceDriver.withOutput(new Text("test IND (2000-2016)"), new FloatWritable(-2.105261F));
+		Q3mapReduceDriver.withOutput(new Text("test IND (2000-2015)"), new FloatWritable(-2.105261F));
 		
-		Q3mapReduceDriver.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(-2.105261F));
+		Q3mapReduceDriver.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(-2.105261F));
 		
 		Q3mapReduceDriver.runTest(false);
 		
@@ -294,8 +294,8 @@ public class AppTest
 		Q4MapDrive.withInput(new LongWritable(1),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.AGR.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q4MapDrive.withOutput(new Text("test AGR (2000-2016)"), new FloatWritable(0.949999988F));
-		Q4MapDrive.withOutput(new Text("test AGR (2000-2016)"), new FloatWritable(0.930000007F));
+		Q4MapDrive.withOutput(new Text("test AGR (2000-2015)"), new FloatWritable(0.949999988F));
+		Q4MapDrive.withOutput(new Text("test AGR (2000-2015)"), new FloatWritable(0.930000007F));
 		
 		Q4MapDrive.runTest(false);
 	}
@@ -308,8 +308,8 @@ public class AppTest
 		Q4MapDrive.withInput(new LongWritable(2),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.IND.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q4MapDrive.withOutput(new Text("test IND (2000-2016)"), new FloatWritable(0.949999988F));
-		Q4MapDrive.withOutput(new Text("test IND (2000-2016)"), new FloatWritable(0.930000007F));
+		Q4MapDrive.withOutput(new Text("test IND (2000-2015)"), new FloatWritable(0.949999988F));
+		Q4MapDrive.withOutput(new Text("test IND (2000-2015)"), new FloatWritable(0.930000007F));
 		
 		Q4MapDrive.runTest(false);
 		
@@ -323,8 +323,8 @@ public class AppTest
 		Q4MapDrive.withInput(new LongWritable(3),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q4MapDrive.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(0.949999988F));
-		Q4MapDrive.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(0.930000007F));
+		Q4MapDrive.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(0.949999988F));
+		Q4MapDrive.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(0.930000007F));
 		
 		Q4MapDrive.runTest(false);
 	}
@@ -338,9 +338,9 @@ public class AppTest
 		
 		testList.add(new FloatWritable(0.930000007F));
 		
-		Q4ReduceDrive.withInput(new Text("test SRV (2000-2016)"), testList);
+		Q4ReduceDrive.withInput(new Text("test SRV (2000-2015)"), testList);
 		
-		Q4ReduceDrive.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(-2.105261F));
+		Q4ReduceDrive.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(-2.105261F));
 		
 		Q4ReduceDrive.runTest();
 		
@@ -358,11 +358,22 @@ public class AppTest
 		Q4mapReduceDriver.withInput(new LongWritable(3),
 				new Text("\"test\",\"tst\",\"kek\",\"SL.SRV.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.949999988\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.930000007\","));
 		
-		Q4mapReduceDriver.withOutput(new Text("test AGR (2000-2016)"), new FloatWritable(-2.105261F));
+		Q4mapReduceDriver.withOutput(new Text("test AGR (2000-2015)"), new FloatWritable(-2.105261F));
 		
-		Q4mapReduceDriver.withOutput(new Text("test IND (2000-2016)"), new FloatWritable(-2.105261F));
+		Q4mapReduceDriver.withOutput(new Text("test IND (2000-2015)"), new FloatWritable(-2.105261F));
 		
-		Q4mapReduceDriver.withOutput(new Text("test SRV (2000-2016)"), new FloatWritable(-2.105261F));
+		Q4mapReduceDriver.withOutput(new Text("test SRV (2000-2015)"), new FloatWritable(-2.105261F));
+		
+		Q4mapReduceDriver.runTest(false);
+		
+	}
+	
+	@Test
+	public void TestQ4MapperAndReducer2()
+	{
+		Q4mapReduceDriver.withInput(new LongWritable(1),
+				new Text("\"Algeria\",\"DZA\",\"Employment in services, male (% of male employment)\",\"SL.SRV.EMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"53.9300003051758\",\"\",\"53.4199981689453\",\"53.8400001525879\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"39.2299995422363\",\"28.2999992370605\",\"\",\"\","));
+		Q4mapReduceDriver.withOutput(new Text("Algeria SRV (2001-2014)"), new FloatWritable((28.3F-53.93F)*100/(53.93F)));
 		
 		Q4mapReduceDriver.runTest(false);
 		
