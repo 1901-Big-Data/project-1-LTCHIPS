@@ -7,8 +7,8 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
-	
+public class Q2Mapper  extends Mapper<LongWritable, Text, Text, FloatWritable>{
+
 	private static String[] headers = 
 		{ "Country Name",
 		"Country Code",
@@ -26,7 +26,9 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		{
 			if (headers[x].equals(col))
 				break;
+			
 		}
+		
 		
 		return x;
 	}
@@ -44,17 +46,19 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		
 		int index = getColIndex("Indicator Code");
 		
-		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\""))
-		{
-			String countryName = rowStr[0].substring(1, rowStr[0].length() - 1);
+		int countryCodeIndex = getColIndex("Country Code");
+		
+		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\"") && rowStr[countryCodeIndex].equals("\"USA\""))
+		{	
 			
-			for (int x = index+1; x < rowStr.length; x++)
-			{
+			for (int x = 44; x < rowStr.length; x++)
+			{		
 				try
 				{
 					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
-					Float value = Float.parseFloat(thingToParse); 
-					context.write(new Text(countryName) , new FloatWritable(value));	
+					
+					Float value = Float.parseFloat(thingToParse);
+					context.write(new Text("United States"), new FloatWritable(value));
 				}
 				catch(NumberFormatException nfe)
 				{
@@ -64,4 +68,5 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		}
 		
 	}
+	
 }

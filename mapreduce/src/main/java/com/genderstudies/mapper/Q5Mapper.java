@@ -2,13 +2,13 @@ package com.genderstudies.mapper;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
-	
+public class Q5Mapper  extends Mapper<LongWritable, Text, Text, DoubleWritable>{
+
 	private static String[] headers = 
 		{ "Country Name",
 		"Country Code",
@@ -26,7 +26,9 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		{
 			if (headers[x].equals(col))
 				break;
+			
 		}
+		
 		
 		return x;
 	}
@@ -37,7 +39,9 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		//the regex splits on commas NOT enclosed in double quotes
 		String[] rowStr = row.toString().split(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 		
-		if (rowStr[1].equals("\"Country Name\"")) //skip headers
+		
+		//skip headers
+		if (rowStr[1].equals("\"Country Name\""))
 		{
 			return;
 		}
@@ -45,23 +49,26 @@ public class Q1Mapper extends Mapper<LongWritable, Text, Text, FloatWritable>{
 		int index = getColIndex("Indicator Code");
 		
 		if (rowStr[index].equals("\"SE.TER.HIAT.BA.FE.ZS\""))
-		{
+		{	
 			String countryName = rowStr[0].substring(1, rowStr[0].length() - 1);
 			
-			for (int x = index+1; x < rowStr.length; x++)
-			{
+			//48 is the year 2004 column
+			for (int x = 48; x < rowStr.length; x++)
+			{	
 				try
 				{
 					String thingToParse = rowStr[x].substring(1, rowStr[x].length() - 1);
-					Float value = Float.parseFloat(thingToParse); 
-					context.write(new Text(countryName) , new FloatWritable(value));	
+					Double value = Double.parseDouble(thingToParse);
+					context.write(new Text(countryName), new DoubleWritable(value));
 				}
 				catch(NumberFormatException nfe)
 				{
+					context.write(new Text(countryName), new DoubleWritable(-1.0));
 					continue;
 				}
 			}
 		}
 		
 	}
+	
 }

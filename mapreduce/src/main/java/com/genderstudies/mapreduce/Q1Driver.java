@@ -14,18 +14,13 @@ import org.apache.hadoop.util.ToolRunner;
 import com.genderstudies.mapper.Q1Mapper;
 import com.genderstudies.reduce.Q1Reducer;
 
-
-/**
- * Hello world!
- *
- */
-public class GenderStudiesDriver extends Configured implements Tool
+public class Q1Driver extends Configured implements Tool
 {
 
 	
     public static void main( String[] args ) throws Exception
     {
-    	int exitCode = ToolRunner.run(new Configuration(), new GenderStudiesDriver(), args);
+    	int exitCode = ToolRunner.run(new Configuration(), new Q1Driver(), args);
 		System.exit(exitCode);        
     }
 
@@ -42,7 +37,7 @@ public class GenderStudiesDriver extends Configured implements Tool
 		FileInputFormat.setInputPaths(job, new Path(arg0[0]));
 		FileOutputFormat.setOutputPath(job, new Path(arg0[1]));
         
-        job.setJarByClass(GenderStudiesDriver.class);
+        job.setJarByClass(Q1Driver.class);
         
         job.setOutputKeyClass(Text.class);
         
