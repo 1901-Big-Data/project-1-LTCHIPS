@@ -17,11 +17,11 @@ public class Q3Reducer extends Reducer<Text, Text, Text, FloatWritable>
 		for (Text flt : fltVal)
 		{
 			String fltStr = flt.toString();
-			if (fltStr.equals("y1"))
+			if (fltStr.substring(0,  2).equals("y1"))
 			{
 				y1 = Float.parseFloat(flt.toString().substring(4));
 			}
-			else if (fltStr.equals("y2"))
+			else if (fltStr.substring(0,  2).equals("y2"))
 			{
 				y2 = Float.parseFloat(flt.toString().substring(4));
 			}
